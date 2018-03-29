@@ -1,0 +1,45 @@
+commands.back.usage=/back
+commands.back.notfound=§cYou haven't teleported yet, so that you can't use this command
+commands.back.success=§aGoing to the last location...
+
+commands.delwarp.usage=/delwarp <warp>
+commands.delwarp.success=§aWarp removed
+
+commands.delwarps.usage=/delwarps
+commands.delwarps.success=§aAll warps have been removed
+
+commands.setwarp.usage=/setwarp <warp>
+commands.setwarp.success=§aWarp is set
+commands.setwarp.warpexists=§cWarp "§e%s§c" already exists!
+
+commands.tpa.usage=/tpa <player>
+commands.tpa.playernotfound=§cPlayer "§e%s§c" not found
+commands.tpa.tpself=§cYou cannot tpa yourself
+commands.tpa.success=§aRequest is sent
+commands.tpa.request0=§a"§e%s§a" wants to teleport to you.
+commands.tpa.request1=§aUse §b/tpaccept§a to accept.
+commands.tpa.request2=§aUse §b/tpdeny§a to deny.
+commands.tpa.request3=§aThe request will be invalid in %s seconds.
+
+commands.tpaccept.usage=/tpaccept
+commands.tpaccept.norequest=§cYou have no requests to accept!
+commands.tpaccept.invalid=§cInvalid request. Is the player offline?
+commands.tpaccept.success.source=§aStart teleporting
+commands.tpaccept.success.dest=§aAccepted teleport request
+
+commands.tpdeny.usage=/tpdeny
+commands.tpdeny.norequest=§cYou have no requests to deny!
+commands.tpdeny.success.source=§a"§e%s§a" turned down your request
+commands.tpdeny.success.dest=§aDenied teleport request
+
+commands.warp.usage=/warp <warp>
+commands.warp.success=§aTeleporting to warp §e%s
+commands.warp.failure=§cInvalid warp (You can delete it using §b/delwarp <warp>§c)
+
+commands.warps.usage=/warps [page]
+commands.warps.list=§aWarps:
+commands.warps.outofrage=§cPage index is out of range!
+commands.warps.head=§aCurrent page: %s  Total: %s
+
+info.warpnotfound=§cWarp "§e%s§c" not found
+info.playeronly=§cOnly players can execute this command

@@ -1,0 +1,45 @@
+commands.back.usage=/back
+commands.back.notfound=§c你没有上一次的传送记录
+commands.back.success=§a正在传送到上一个位置...
+
+commands.delwarp.usage=/delwarp <地标>
+commands.delwarp.success=§a地标已移除
+
+commands.delwarps.usage=/delwarps
+commands.delwarps.success=§a已删除所有地标
+
+commands.setwarp.usage=/setwarp <地标>
+commands.setwarp.success=§a地标已设置
+commands.setwarp.warpexists=§c地标“§e%s§c”已存在！
+
+commands.tpa.usage=/tpa <玩家>
+commands.tpa.playernotfound=§c玩家“§e%s§c”不存在
+commands.tpa.tpself=§c你不能tp你自己
+commands.tpa.success=§a传送请求已发出
+commands.tpa.request0=§a玩家“§e%s§a”请求传送到你这里
+commands.tpa.request1=§a输入 §b/tpaccept§a 接受请求
+commands.tpa.request2=§a输入 §b/tpdeny§a 拒绝请求
+commands.tpa.request3=§a请求将会在%s后失效
+
+commands.tpaccept.usage=/tpaccept
+commands.tpaccept.norequest=§c你没有可以接受的传送请求
+commands.tpaccept.invalid=§c无效的传送请求（难道那人下线了？）
+commands.tpaccept.success.source=§a开始传送...
+commands.tpaccept.success.dest=§a已接受传送
+
+commands.tpdeny.usage=/tpdeny
+commands.tpdeny.norequest=§c你没有可以拒绝的传送请求
+commands.tpdeny.success.source=§a玩家“§e%s§a”拒绝了你的请求
+commands.tpdeny.success.dest=§a已拒绝传送
+
+commands.warp.usage=/warp <地标>
+commands.warp.success=§a正在传送到地标§e%s§a...
+commands.warp.failure=§c无效的地标（你可以删了它）
+
+commands.warps.usage=/warps [页码]
+commands.warps.list=§a地标列表：
+commands.warps.outofrage=§c没有那么多页
+commands.warps.head=§a当前页：%s  总页数：%s
+
+info.warpnotfound=§c地标"§e%s§c"不存在
+info.playeronly=§c只有玩家才能执行这个命令

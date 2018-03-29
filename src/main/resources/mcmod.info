@@ -1,0 +1,16 @@
+[
+{
+  "modid": "tputil",
+  "name": "TPUtil",
+  "description": "Set warps, teleport to others, just like essentials.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["aleck099"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
