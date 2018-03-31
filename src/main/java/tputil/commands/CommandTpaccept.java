@@ -57,12 +57,17 @@ public class CommandTpaccept extends CommandBase {
 				return;
 			}
 
+			/*你给我下去*/
+			if (source.isRiding()) {
+				source.dismountRidingEntity();
+			}
+
 			Statics.lastMap.put(source.getName(), new LastLoc(source.getPositionVector(), source.dimension));
 
 			EntityPlayerMP dest = (EntityPlayerMP) sender;
 			/*跨纬度*/
 			if (source.dimension != dest.dimension)
-				server.getPlayerList().transferPlayerToDimension(source, dest.dimension, new EmptyTeleporter(server.getWorld(dest.dimension)));
+				server.getPlayerList().transferPlayerToDimension(source, dest.dimension, new EmptyTeleporter());
 
 			source.setPositionAndUpdate(dest.posX, dest.posY, dest.posZ);
 			source.sendMessage(new TextComponentTranslation("commands.tpaccept.success.source"));

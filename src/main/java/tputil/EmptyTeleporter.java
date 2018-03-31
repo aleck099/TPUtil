@@ -4,9 +4,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 
+/**
+ * 这个类就是用来搞笑的
+ * 谁叫MC的传送机制这么垃圾呢
+ */
 public class EmptyTeleporter extends Teleporter {
-	public EmptyTeleporter(WorldServer worldIn) {
-		super(worldIn);
+
+	public EmptyTeleporter() {
+		super(null);
 	}
 
 	@Override

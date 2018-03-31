@@ -51,11 +51,17 @@ public class CommandWarp extends CommandBase {
 				return;
 			}
 
+			/*骑乘时不得tp，否则  哼哼*/
+			if (player.isRiding()) {
+				player.sendMessage(new TextComponentTranslation("info.ridingcannottp"));
+				return;
+			}
+
 			Statics.lastMap.put(player.getName(), new LastLoc(player.getPositionVector(), player.dimension));
 
 			if (player.dimension != loc.dimension) {
 				try {
-					server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter(server.getWorld(loc.dimension)));
+					server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter());
 				} catch (Throwable e) {
 					/*维度无效？或者是什么令人费解的东西？*/
 					player.sendMessage(new TextComponentTranslation("commands.warp.failure"));

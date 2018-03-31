@@ -37,12 +37,18 @@ public class CommandBack extends CommandBase {
 				sender.sendMessage(new TextComponentTranslation("commands.back.notfound"));
 				return;
 			}
-			/*else*/
+
+			/*骑乘时不得tp，否则  哼哼*/
+			if (player.isRiding()) {
+				player.sendMessage(new TextComponentTranslation("info.ridingcannottp"));
+				return;
+			}
+
 			Statics.lastMap.put(name, new LastLoc(player.getPositionVector(), player.dimension));
 
 			if (player.dimension != loc.dimension) {
 				/*跨维度*/
-				server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter(server.getWorld(loc.dimension)));
+				server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter());
 			}
 
 			/*传送*/

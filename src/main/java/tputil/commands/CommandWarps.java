@@ -60,7 +60,7 @@ public class CommandWarps extends CommandBase {
 			// else
 			int rgstart = page * 8;
 			int rgend = rgstart + 8;
-			StringBuffer out = new StringBuffer(new TextComponentTranslation("commands.warps.head", String.valueOf(page), String.valueOf(pages)).getUnformattedText());
+			StringBuffer out = new StringBuffer(new TextComponentTranslation("commands.warps.head", String.valueOf(page) + 1, String.valueOf(pages)).getUnformattedText());
 			for (int lo = rgstart; lo < warps && lo < rgend; lo++) {
 				out.append("\n- §a" + sm[lo]);
 			}

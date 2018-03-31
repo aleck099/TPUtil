@@ -41,5 +41,9 @@ commands.warps.list=§aWarps:
 commands.warps.outofrage=§cPage index is out of range!
 commands.warps.head=§aCurrent page: %s  Total: %s
 
+commands.resetwarp.usage=/resetwarp <warp>
+commands.resetwarp.success=§aWarp is reset
+
 info.warpnotfound=§cWarp "§e%s§c" not found
 info.playeronly=§cOnly players can execute this command
+info.ridingcannottp=§cYou cannot use this command now because you are riding on something

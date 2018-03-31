@@ -38,6 +38,34 @@ public class WarpsManager {
 			}
 		}
 	}
+
+	/**
+	 * 重设地标
+	 * @param name 地标名
+	 * @param loc 位置
+	 * @throws WarpNotFoundException 如果地标不存在
+	 * @throws IOException ？？？？？
+	 */
+	public void resetWarp(String name, Location loc) throws WarpNotFoundException, IOException {
+		synchronized (cfg) {
+			OutputStreamWriter oWriter;
+			try {
+				oWriter = new OutputStreamWriter(new FileOutputStream(new File(cfg, name), false), Charset.forName("utf-8"));
+			} catch (FileNotFoundException e) {
+				throw new WarpNotFoundException();
+			}
+
+			StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
+			bd.append(':');
+			bd.append(loc.position.x);
+			bd.append(':');
+			bd.append(loc.position.y);
+			bd.append(':');
+			bd.append(loc.position.z);
+			oWriter.write(bd.toString());
+			oWriter.close();
+		}
+	}
 	
 	/**
 	 * 删除地标

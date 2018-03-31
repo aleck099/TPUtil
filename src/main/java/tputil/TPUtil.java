@@ -10,7 +10,7 @@ import tputil.commands.*;
 @Mod(modid = TPUtil.MODID, version = TPUtil.VERSION)
 public class TPUtil {
 
-	public static final String MODID = "tputil", VERSION = "1.0.2";
+	public static final String MODID = "tputil", VERSION = "1.0.3";
 
 	@SidedProxy(serverSide = "tputil.CommonProxy", clientSide = "tputil.CommonProxy$ClientProxy", modId = MODID)
 	public static CommonProxy proxy;
@@ -36,6 +36,7 @@ public class TPUtil {
 		event.registerServerCommand(new CommandTpdeny());
 		event.registerServerCommand(new CommandWarp());
 		event.registerServerCommand(new CommandWarps());
+		event.registerServerCommand(new CommandResetwarp());
 	}
 
 }
