@@ -1,13 +1,13 @@
 package tputil;
 
-import tputil.db.LastLoc;
-import tputil.db.TpMgr;
+import tputil.db.Location;
+import tputil.db.TpManager;
 import tputil.db.WarpsManager;
 
 import java.util.Map;
 
 public class Statics {
-	public static Map<String, LastLoc> lastMap;
-	public static TpMgr tpMgr;
+	public static Map<String, Location> lastMap;
+	public static TpManager tpManager;
 	public static WarpsManager warpsManager;
 }

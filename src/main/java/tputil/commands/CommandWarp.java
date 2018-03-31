@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import tputil.EmptyTeleporter;
 import tputil.Statics;
-import tputil.db.LastLoc;
 import tputil.db.Location;
 
 import javax.annotation.Nullable;
@@ -57,7 +56,7 @@ public class CommandWarp extends CommandBase {
 				return;
 			}
 
-			Statics.lastMap.put(player.getName(), new LastLoc(player.getPositionVector(), player.dimension));
+			Statics.lastMap.put(player.getName(), new Location(player.dimension, player.getPositionVector()));
 
 			if (player.dimension != loc.dimension) {
 				try {

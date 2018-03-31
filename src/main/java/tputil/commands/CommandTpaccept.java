@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import tputil.EmptyTeleporter;
 import tputil.Statics;
-import tputil.db.LastLoc;
+import tputil.db.Location;
 import tputil.db.TpRequest;
 
 import java.util.List;
@@ -35,10 +35,10 @@ public class CommandTpaccept extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-		Statics.tpMgr.check();
+		Statics.tpManager.check();
 
 		if (sender instanceof EntityPlayerMP) {
-			TpRequest req = Statics.tpMgr.getByDestName(sender.getName());
+			TpRequest req = Statics.tpManager.getByDestName(sender.getName());
 			if (req == null) {
 				sender.sendMessage(new TextComponentTranslation("commands.tpaccept.norequest"));
 				return;
@@ -62,7 +62,7 @@ public class CommandTpaccept extends CommandBase {
 				source.dismountRidingEntity();
 			}
 
-			Statics.lastMap.put(source.getName(), new LastLoc(source.getPositionVector(), source.dimension));
+			Statics.lastMap.put(source.getName(), new Location(source.dimension, source.getPositionVector()));
 
 			EntityPlayerMP dest = (EntityPlayerMP) sender;
 			/*跨纬度*/
@@ -72,7 +72,7 @@ public class CommandTpaccept extends CommandBase {
 			source.setPositionAndUpdate(dest.posX, dest.posY, dest.posZ);
 			source.sendMessage(new TextComponentTranslation("commands.tpaccept.success.source"));
 			dest.sendMessage(new TextComponentTranslation("commands.tpaccept.success.dest"));
-			Statics.tpMgr.removeByDestName(req.playerDest);
+			Statics.tpManager.removeByDestName(req.playerDest);
 		} else {
 			sender.sendMessage(new TextComponentTranslation("info.playeronly"));
 		}

@@ -1,22 +1,27 @@
 package tputil;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
-import tputil.db.TpMgr;
+import tputil.db.TpManager;
 import tputil.db.WarpsManager;
 import tputil.event.ModEventHandler;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
-		Statics.warpsManager = new WarpsManager(new File(event.getModConfigurationDirectory(), "warps"));
+		try {
+			Statics.warpsManager = new WarpsManager(Paths.get(event.getModConfigurationDirectory().getCanonicalPath(), "warps"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Statics.lastMap = new HashMap<>();
-		Statics.tpMgr = new TpMgr();
+		Statics.tpManager = new TpManager();
 	}
 
 	public void init() {

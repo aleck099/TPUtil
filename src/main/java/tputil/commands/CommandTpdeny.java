@@ -34,11 +34,11 @@ public class CommandTpdeny extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		Statics.tpMgr.check();
+		Statics.tpManager.check();
 
 		if (sender instanceof EntityPlayerMP) {
 			String dname = sender.getName();
-			TpRequest req = Statics.tpMgr.getByDestName(dname);
+			TpRequest req = Statics.tpManager.getByDestName(dname);
 
 			if (req == null) {
 				sender.sendMessage(new TextComponentTranslation("commands.tpdeny.norequest"));
@@ -57,7 +57,7 @@ public class CommandTpdeny extends CommandBase {
 				source.sendMessage(new TextComponentTranslation("commands.tpdeny.success.source", dname));
 			}
 
-			Statics.tpMgr.removeByDestName(dname);
+			Statics.tpManager.removeByDestName(dname);
 			sender.sendMessage(new TextComponentTranslation("commands.tpdeny.success.dest"));
 		} else {
 			sender.sendMessage(new TextComponentTranslation("info.playeronly"));

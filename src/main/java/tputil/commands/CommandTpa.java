@@ -52,7 +52,7 @@ public class CommandTpa extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		Statics.tpMgr.check();
+		Statics.tpManager.check();
 
 		if (sender instanceof EntityPlayerMP) {
 			if (args.length != 1)
@@ -72,7 +72,7 @@ public class CommandTpa extends CommandBase {
 				return;
 			}
 
-			Statics.tpMgr.request(new TpRequest(sender.getName(), argName, System.currentTimeMillis()));
+			Statics.tpManager.request(new TpRequest(sender.getName(), argName, System.currentTimeMillis()));
 			sender.sendMessage(new TextComponentTranslation("commands.tpa.success"));
 			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request0", argName));
 			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request1"));

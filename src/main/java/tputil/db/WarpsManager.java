@@ -4,57 +4,117 @@ import net.minecraft.util.math.Vec3d;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class WarpsManager {
-	private final File cfg;
-	
+	private final String dir;
+
 	/**
-	 * 
-	 * @param config 地标目录，注意是目录
+	 * @param directory 地标目录，注意是目录
 	 * @throws NullPointerException 如果传入 <b>null</b>
 	 */
-	public WarpsManager(File config) {
-		if (config == null)
+	public WarpsManager(Path directory) {
+		if (directory == null)
 			throw new NullPointerException();
-		if (config.isFile())
-			config.delete();
-		if (!config.exists()) {
-			config.mkdirs();
-			// server.getLogger().info("Dir maked");
-		}
-		this.cfg = config;
-	}
-	
-	public void removeAll() {
-		synchronized (cfg) {
-			File[] fl = cfg.listFiles();
-			if (fl == null)
-				return;
-			for (File f : fl) {
-				f.delete();
+
+		try {
+			if (!Files.exists(directory)) {
+				Files.createDirectories(directory);
 			}
+			if (!Files.isDirectory(directory)) {
+				Files.delete(directory);
+				Files.createDirectories(directory);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.dir = directory.toString();
+	}
+
+	public void removeAll() {
+		try {
+			for (Path f : Paths.get(dir)) {
+				Files.delete(f);
+			}
+		} catch (IOException e) {
+			/*干点什么好呢*/
 		}
 	}
 
 	/**
 	 * 重设地标
+	 *
 	 * @param name 地标名
-	 * @param loc 位置
+	 * @param loc  位置
 	 * @throws WarpNotFoundException 如果地标不存在
-	 * @throws IOException ？？？？？
+	 * @throws IOException           ？？？？？
 	 */
 	public void resetWarp(String name, Location loc) throws WarpNotFoundException, IOException {
-		synchronized (cfg) {
-			OutputStreamWriter oWriter;
-			try {
-				oWriter = new OutputStreamWriter(new FileOutputStream(new File(cfg, name), false), Charset.forName("utf-8"));
-			} catch (FileNotFoundException e) {
-				throw new WarpNotFoundException();
-			}
 
+		OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"));
+
+		StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
+		bd.append(':');
+		bd.append(loc.position.x);
+		bd.append(':');
+		bd.append(loc.position.y);
+		bd.append(':');
+		bd.append(loc.position.z);
+
+		oWriter.write(bd.toString());
+		oWriter.close();
+	}
+
+	/**
+	 * 删除地标
+	 *
+	 * @param name 地标名
+	 * @throws WarpNotFoundException 如果地标不存在
+	 */
+	public void removeWarp(String name) throws WarpNotFoundException {
+		Path f = Paths.get(dir, name);
+		if (!Files.exists(f))
+			throw new WarpNotFoundException();
+		if (Files.isDirectory(f)) {
+			try {
+				Files.delete(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			throw new WarpNotFoundException();
+		}
+
+		try {
+			Files.delete(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 添加地标
+	 *
+	 * @param name 地标名
+	 * @param loc  地标坐标
+	 * @throws IOException                如果无法创建
+	 * @throws WarpAlreadyExistsException 如果地标已存在
+	 */
+	public void addWarp(String name, Location loc) throws IOException, WarpAlreadyExistsException {
+		Path f = Paths.get(dir, name);
+		if (Files.isDirectory(f)) {
+			Files.delete(f);
+		}
+		if (Files.exists(f)) {
+			throw new WarpAlreadyExistsException();
+		} else {
+			Files.createFile(f);
+			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(f), Charset.forName("utf-8"));
 			StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
 			bd.append(':');
 			bd.append(loc.position.x);
@@ -65,83 +125,26 @@ public class WarpsManager {
 			oWriter.write(bd.toString());
 			oWriter.close();
 		}
-	}
-	
-	/**
-	 * 删除地标
-	 * @param name 地标名
-	 * @throws WarpNotFoundException 如果地标不存在
-	 */
-	public void removeWarp(String name) throws WarpNotFoundException {
-		synchronized (cfg) {
-			File f = new File(cfg, name);
-			if (f.isDirectory()) {
-				f.delete();
-				return;
-			}
-			if (f.exists()) {
-				f.delete();
-			} else {
-				throw new WarpNotFoundException();
-			}
-		}
-	}
-	
-	/**
-	 * 添加地标
-	 * @param name 地标名
-	 * @param loc 地标坐标
-	 * @throws IOException 如果无法创建
-	 * @throws WarpAlreadyExistsException 如果地标已存在
-	 */
-	public void addWarp(String name, Location loc) throws IOException, WarpAlreadyExistsException {
-		synchronized (cfg) {
-			File f = new File(cfg, name);
-			if (f.isDirectory()) {
-				f.delete();
-			}
-			if (!f.createNewFile()) {
-				throw new WarpAlreadyExistsException();
-			} else {
-				OutputStreamWriter oWriter = new OutputStreamWriter(new FileOutputStream(f), Charset.forName("utf-8"));
-				StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
-				bd.append(':');
-				bd.append(loc.position.x);
-				bd.append(':');
-				bd.append(loc.position.y);
-				bd.append(':');
-				bd.append(loc.position.z);
-				oWriter.write(bd.toString());
-				oWriter.close();
-			}
-		}
+
 	}
 
 	/**
 	 * 获取地标
+	 *
 	 * @param name 地标名
 	 * @return 地标，如果不存在，返回 <b>null</b>
 	 */
 	public Location getByName(String name) {
-		synchronized (cfg) {
-			File[] ls = cfg.listFiles();
-			if (ls == null)
-				return null;
-			for (File f : ls) {
-				if (f.isDirectory()) {
-					f.delete();
-					continue;
-				}
-				if (f.getName().equals(name))
-					return readFile(f);
-			}
+		Path f = Paths.get(dir, name);
+		if (!Files.exists(f))
 			return null;
-		}
+
+		return readFile(f);
 	}
-	
-	private Location readFile(File f) {
+
+	private Location readFile(Path f) {
 		try {
-			InputStreamReader iReader = new InputStreamReader(new FileInputStream(f), Charset.forName("utf-8"));
+			InputStreamReader iReader = new InputStreamReader(Files.newInputStream(f), Charset.forName("utf-8"));
 			char[] buf_ = new char[512];
 			int length = iReader.read(buf_);
 			iReader.close();
@@ -161,32 +164,39 @@ public class WarpsManager {
 			return null;
 		}
 	}
-	
+
 	public List<String> getMatches(String prefix) {
 		LinkedList<String> ls = new LinkedList<>();
-		synchronized (cfg) {
-			String[] fl = cfg.list();
-			if (fl == null)
-				return Collections.emptyList();
-
-			for (String fname : fl) {
-				if (fname.startsWith(prefix))
-					ls.add(fname);
-			}
+		Stream<Path> fl;
+		try {
+			fl = Files.list(Paths.get(dir));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return Collections.emptyList();
 		}
+		if (fl == null)
+			return Collections.emptyList();
+
+		fl.filter(p -> p.getFileName().toString().startsWith(prefix)).forEach(p -> ls.add(p.getFileName().toString()));
 		return ls;
 	}
 
 	public String[] getAll() {
-		synchronized (cfg) {
-			return cfg.list();
+		List<String> ls = new LinkedList<>();
+		try {
+			Files.list(Paths.get(dir)).forEach((p) -> ls.add(p.getFileName().toString()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		String[] r = new String[ls.size()];
+		ls.toArray(r);
+		return r;
 	}
-	
+
 	public class WarpAlreadyExistsException extends Exception {
 		private static final long serialVersionUID = 2840953256251121506L;
 	}
-	
+
 	public class WarpNotFoundException extends Exception {
 		private static final long serialVersionUID = 1429184588373857898L;
 	}

@@ -3,10 +3,10 @@ package tputil.db;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TpMgr {
+public class TpManager {
 	private final List<TpRequest> res;
 	
-	public TpMgr() {
+	public TpManager() {
 		res = new ArrayList<>();
 	}
 

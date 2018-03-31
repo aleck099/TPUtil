@@ -8,7 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import tputil.EmptyTeleporter;
 import tputil.Statics;
-import tputil.db.LastLoc;
+import tputil.db.Location;
 
 public class CommandBack extends CommandBase {
 	@Override
@@ -31,7 +31,7 @@ public class CommandBack extends CommandBase {
 		if (sender instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) sender;
 			String name = player.getName();
-			LastLoc loc = Statics.lastMap.get(name);
+			Location loc = Statics.lastMap.get(name);
 			if (loc == null) {
 				/*没有传送记录*/
 				sender.sendMessage(new TextComponentTranslation("commands.back.notfound"));
@@ -44,7 +44,7 @@ public class CommandBack extends CommandBase {
 				return;
 			}
 
-			Statics.lastMap.put(name, new LastLoc(player.getPositionVector(), player.dimension));
+			Statics.lastMap.put(name, new Location(player.dimension, player.getPositionVector()));
 
 			if (player.dimension != loc.dimension) {
 				/*跨维度*/
@@ -52,7 +52,7 @@ public class CommandBack extends CommandBase {
 			}
 
 			/*传送*/
-			player.setPositionAndUpdate(loc.loc.x, loc.loc.y, loc.loc.z);
+			player.setPositionAndUpdate(loc.position.x, loc.position.y, loc.position.z);
 			player.sendMessage(new TextComponentTranslation("commands.back.success"));
 		} else {
 			sender.sendMessage(new TextComponentTranslation("info.playeronly"));
