@@ -43,12 +43,12 @@ public class WarpsManager {
 	}
 
 	public void removeAll() {
-		try {
-			for (Path f : wpath) {
+		for (Path f : wpath) {
+			try {
 				Files.delete(f);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			/*干点什么好呢*/
 		}
 	}
 
@@ -60,8 +60,9 @@ public class WarpsManager {
 	 * @throws WarpNotFoundException 如果地标不存在
 	 */
 	public void resetWarp(String name, Location loc) throws WarpNotFoundException {
-		try {
-			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"));
+		try (
+				OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"))
+		) {
 			oWriter.write(String.valueOf(loc.dimension));
 			oWriter.write(':');
 			oWriter.write(String.valueOf(loc.position.x));
@@ -127,8 +128,9 @@ public class WarpsManager {
 			e.printStackTrace();
 		}
 
-		try {
-			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(f), Charset.forName("utf-8"));
+		try (
+				OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(f), Charset.forName("utf-8"))
+		) {
 			oWriter.write(String.valueOf(loc.dimension));
 			oWriter.write(':');
 			oWriter.write(String.valueOf(loc.position.x));
@@ -155,10 +157,11 @@ public class WarpsManager {
 		return readFile(f);
 	}
 
-	private Location readFile(Path f) {
+	private static Location readFile(Path f) {
 		char[] buf;
-		try {
-			InputStreamReader iReader = new InputStreamReader(Files.newInputStream(f), Charset.forName("utf-8"));
+		try (
+				InputStreamReader iReader = new InputStreamReader(Files.newInputStream(f), Charset.forName("utf-8"))
+		) {
 			char[] buf_ = new char[512];
 			int length = iReader.read(buf_);
 			buf = new char[length];

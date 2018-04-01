@@ -10,7 +10,7 @@ import tputil.commands.*;
 @Mod(modid = TPUtil.MODID, version = TPUtil.VERSION)
 public class TPUtil {
 
-	public static final String MODID = "tputil", VERSION = "1.0.5";
+	public static final String MODID = "tputil", VERSION = "1.0.6";
 
 	@SidedProxy(serverSide = "tputil.CommonProxy", clientSide = "tputil.CommonProxy$ClientProxy", modId = MODID)
 	public static CommonProxy proxy;
