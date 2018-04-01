@@ -7,7 +7,6 @@ import tputil.db.TpManager;
 import tputil.db.WarpsManager;
 import tputil.event.ModEventHandler;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;

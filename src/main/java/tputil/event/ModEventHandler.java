@@ -2,6 +2,7 @@ package tputil.event;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,6 +25,7 @@ public class ModEventHandler {
 			EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
 			/*添加死亡坐标*/
 			Statics.lastMap.put(player.getName(), new Location(player.dimension, new Vec3d(player.posX, player.posY, player.posZ)));
+			player.sendMessage(new TextComponentTranslation("info.youcanback"));
 		}
 	}
 

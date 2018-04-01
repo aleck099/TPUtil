@@ -2,7 +2,10 @@ package tputil.db;
 
 import net.minecraft.util.math.Vec3d;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +17,7 @@ import java.util.stream.Stream;
 
 public class WarpsManager {
 	private final String dir;
+	private final Path wpath;
 
 	/**
 	 * @param directory 地标目录，注意是目录
@@ -34,12 +38,13 @@ public class WarpsManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.wpath = directory;
 		this.dir = directory.toString();
 	}
 
 	public void removeAll() {
 		try {
-			for (Path f : Paths.get(dir)) {
+			for (Path f : wpath) {
 				Files.delete(f);
 			}
 		} catch (IOException e) {
@@ -53,22 +58,22 @@ public class WarpsManager {
 	 * @param name 地标名
 	 * @param loc  位置
 	 * @throws WarpNotFoundException 如果地标不存在
-	 * @throws IOException           ？？？？？
 	 */
-	public void resetWarp(String name, Location loc) throws WarpNotFoundException, IOException {
-
-		OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"));
-
-		StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
-		bd.append(':');
-		bd.append(loc.position.x);
-		bd.append(':');
-		bd.append(loc.position.y);
-		bd.append(':');
-		bd.append(loc.position.z);
-
-		oWriter.write(bd.toString());
-		oWriter.close();
+	public void resetWarp(String name, Location loc) throws WarpNotFoundException {
+		try {
+			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"));
+			oWriter.write(String.valueOf(loc.dimension));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.x));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.y));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.z));
+		} catch (FileNotFoundException e) {
+			throw new WarpNotFoundException();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -102,30 +107,38 @@ public class WarpsManager {
 	 *
 	 * @param name 地标名
 	 * @param loc  地标坐标
-	 * @throws IOException                如果无法创建
 	 * @throws WarpAlreadyExistsException 如果地标已存在
 	 */
-	public void addWarp(String name, Location loc) throws IOException, WarpAlreadyExistsException {
+	public void addWarp(String name, Location loc) throws WarpAlreadyExistsException {
 		Path f = Paths.get(dir, name);
-		if (Files.isDirectory(f)) {
-			Files.delete(f);
-		}
-		if (Files.exists(f)) {
+		if (Files.isDirectory(f))
+			try {
+				Files.delete(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		if (Files.exists(f))
 			throw new WarpAlreadyExistsException();
-		} else {
+
+		try {
 			Files.createFile(f);
-			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(f), Charset.forName("utf-8"));
-			StringBuilder bd = new StringBuilder(String.valueOf(loc.dimension));
-			bd.append(':');
-			bd.append(loc.position.x);
-			bd.append(':');
-			bd.append(loc.position.y);
-			bd.append(':');
-			bd.append(loc.position.z);
-			oWriter.write(bd.toString());
-			oWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
+		try {
+			OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(f), Charset.forName("utf-8"));
+			oWriter.write(String.valueOf(loc.dimension));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.x));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.y));
+			oWriter.write(':');
+			oWriter.write(String.valueOf(loc.position.z));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -143,33 +156,34 @@ public class WarpsManager {
 	}
 
 	private Location readFile(Path f) {
+		char[] buf;
 		try {
 			InputStreamReader iReader = new InputStreamReader(Files.newInputStream(f), Charset.forName("utf-8"));
 			char[] buf_ = new char[512];
 			int length = iReader.read(buf_);
-			iReader.close();
-			char[] buf = new char[length];
+			buf = new char[length];
 			System.arraycopy(buf_, 0, buf, 0, length);
 			buf_ = null;
-			String[] args = String.valueOf(buf).split(":", 4);
-			if (args.length != 4)
-				return null;
-			// success
-			return new Location(Integer.valueOf(args[0]), new Vec3d(
-					Double.valueOf(args[1]),
-					Double.valueOf(args[2]),
-					Double.valueOf(args[3])));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
+
+		String[] args = String.valueOf(buf).split(":", 4);
+		if (args.length != 4)
+			return null;
+		/* success */
+		return new Location(Integer.valueOf(args[0]), new Vec3d(
+				Double.valueOf(args[1]),
+				Double.valueOf(args[2]),
+				Double.valueOf(args[3])));
 	}
 
 	public List<String> getMatches(String prefix) {
 		LinkedList<String> ls = new LinkedList<>();
 		Stream<Path> fl;
 		try {
-			fl = Files.list(Paths.get(dir));
+			fl = Files.list(wpath);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Collections.emptyList();
@@ -181,16 +195,15 @@ public class WarpsManager {
 		return ls;
 	}
 
-	public String[] getAll() {
+	public List<String> getAll() {
 		List<String> ls = new LinkedList<>();
 		try {
-			Files.list(Paths.get(dir)).forEach((p) -> ls.add(p.getFileName().toString()));
+			Files.list(wpath).forEach(p -> ls.add(p.getFileName().toString()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String[] r = new String[ls.size()];
-		ls.toArray(r);
-		return r;
+
+		return ls;
 	}
 
 	public class WarpAlreadyExistsException extends Exception {

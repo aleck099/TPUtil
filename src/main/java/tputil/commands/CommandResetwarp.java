@@ -7,14 +7,12 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import tputil.Statics;
 import tputil.db.Location;
 import tputil.db.WarpsManager;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,8 +59,6 @@ public class CommandResetwarp extends CommandBase {
 			} catch (WarpsManager.WarpNotFoundException e) {
 				sender.sendMessage(new TextComponentTranslation("info.warpnotfound"));
 				return;
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 
 			sender.sendMessage(new TextComponentTranslation("commands.resetwarp.success"));

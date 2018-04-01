@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TpManager {
-	private final List<TpRequest> res;
+	private final List<TpRequest> soe;
 	
 	public TpManager() {
-		res = new ArrayList<>();
+		soe = new ArrayList<>();
 	}
 
 	public void request(TpRequest req) {
 		removeByDestName(req.playerDest);
 		removeBySourceName(req.playerDest);
-		synchronized (res) {
-			res.add(req);
+		synchronized (soe) {
+			soe.add(req);
 		}
 	}
 	
@@ -24,8 +24,8 @@ public class TpManager {
 	 * @return 该请求，如果没有请求，返回 null
 	 */
 	public TpRequest getByDestName(String name) {
-		synchronized (res) {
-			for (TpRequest tr : res) {
+		synchronized (soe) {
+			for (TpRequest tr : soe) {
 				if (tr.playerDest.equals(name))
 					return tr;
 			}
@@ -34,14 +34,14 @@ public class TpManager {
 	}
 	
 	public void removeByDestName(String destName) {
-		synchronized (res) {
-			res.removeIf(req -> req.playerDest.equals(destName));
+		synchronized (soe) {
+			soe.removeIf(req -> req.playerDest.equals(destName));
 		}
 	}
 	
 	public void removeBySourceName(String sourceName) {
-		synchronized (res) {
-			res.removeIf(req -> req.playerDest.equals(sourceName));
+		synchronized (soe) {
+			soe.removeIf(req -> req.playerDest.equals(sourceName));
 		}
 	}
 
@@ -49,9 +49,9 @@ public class TpManager {
 	 * 检查传送请求队列，删掉无效的请求
 	 */
 	public void check() {
-		synchronized (res) {
+		synchronized (soe) {
 			long tk = System.currentTimeMillis();
-			res.removeIf(req -> req.time + 120000 < tk);
+			soe.removeIf(req -> req.time + 120000 < tk);
 		}
 	}
 }

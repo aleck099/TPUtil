@@ -44,3 +44,4 @@ commands.warps.head=§a当前页：%s  总页数：%s
 info.warpnotfound=§c地标"§e%s§c"不存在
 info.playeronly=§c只有玩家才能执行这个命令
 info.ridingcannottp=§c你不能在骑着东西的时候使用这个命令
+info.youcanback=§a你可以输入§b/back§a回到死亡地点

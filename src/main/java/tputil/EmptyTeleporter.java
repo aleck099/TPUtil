@@ -2,7 +2,6 @@ package tputil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
-import net.minecraft.world.WorldServer;
 
 /**
  * 这个类就是用来搞笑的

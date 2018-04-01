@@ -47,3 +47,4 @@ commands.resetwarp.success=§aWarp is reset
 info.warpnotfound=§cWarp "§e%s§c" not found
 info.playeronly=§cOnly players can execute this command
 info.ridingcannottp=§cYou cannot use this command now because you are riding on something
+info.youcanback=§aYou can return to the position where you died using §b/back

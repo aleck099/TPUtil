@@ -9,6 +9,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import tputil.Statics;
 
+import java.util.List;
+
 public class CommandWarps extends CommandBase {
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -33,7 +35,7 @@ public class CommandWarps extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) {
-			String[] alist = Statics.warpsManager.getAll();
+			List<String> alist = Statics.warpsManager.getAll();
 			StringBuffer sbuf = new StringBuffer(new TextComponentTranslation("commands.warps.list").getUnformattedText());
 			for (String s : alist) {
 				sbuf.append("\n-§a " + s);
@@ -47,8 +49,8 @@ public class CommandWarps extends CommandBase {
 				throw new WrongUsageException("commands.warps.usage");
 			}
 
-			String[] sm = Statics.warpsManager.getAll();
-			int warps = sm.length; // 地标总数
+			List<String> sm = Statics.warpsManager.getAll();
+			int warps = sm.size(); // 地标总数
 			// 计算页数
 			int pages = warps / 8 + 1;
 			if (warps % 8 == 0)
@@ -62,7 +64,7 @@ public class CommandWarps extends CommandBase {
 			int rgend = rgstart + 8;
 			StringBuffer out = new StringBuffer(new TextComponentTranslation("commands.warps.head", String.valueOf(page) + 1, String.valueOf(pages)).getUnformattedText());
 			for (int lo = rgstart; lo < warps && lo < rgend; lo++) {
-				out.append("\n- §a" + sm[lo]);
+				out.append("\n- §a" + sm.get(lo));
 			}
 			sender.sendMessage(new TextComponentString(out.toString()));
 		}

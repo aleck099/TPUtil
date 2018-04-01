@@ -12,8 +12,6 @@ import tputil.Statics;
 import tputil.db.Location;
 import tputil.db.WarpsManager;
 
-import java.io.IOException;
-
 public class CommandSetwarp extends CommandBase {
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -47,8 +45,6 @@ public class CommandSetwarp extends CommandBase {
 			try {
 				Statics.warpsManager.addWarp(wname, loc);
 				sender.sendMessage(new TextComponentTranslation("commands.setwarp.success"));
-			} catch (IOException e) {
-				e.printStackTrace();
 			} catch (WarpsManager.WarpAlreadyExistsException e) {
 				sender.sendMessage(new TextComponentTranslation("commands.setwarp.warpexists", wname));
 			}
