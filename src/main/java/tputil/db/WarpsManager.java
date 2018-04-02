@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class WarpsManager {
-	private final String dir;
 	private final Path wpath;
 
 	/**
@@ -39,7 +38,6 @@ public class WarpsManager {
 			e.printStackTrace();
 		}
 		this.wpath = directory;
-		this.dir = directory.toString();
 	}
 
 	public void removeAll() {
@@ -61,7 +59,7 @@ public class WarpsManager {
 	 */
 	public void resetWarp(String name, Location loc) throws WarpNotFoundException {
 		try (
-				OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(dir, name)), Charset.forName("utf-8"))
+				OutputStreamWriter oWriter = new OutputStreamWriter(Files.newOutputStream(wpath.resolve(name)), Charset.forName("utf-8"))
 		) {
 			oWriter.write(String.valueOf(loc.dimension));
 			oWriter.write(':');
@@ -84,7 +82,7 @@ public class WarpsManager {
 	 * @throws WarpNotFoundException 如果地标不存在
 	 */
 	public void removeWarp(String name) throws WarpNotFoundException {
-		Path f = Paths.get(dir, name);
+		Path f = wpath.resolve(name);
 		if (!Files.exists(f))
 			throw new WarpNotFoundException();
 		if (Files.isDirectory(f)) {
@@ -111,7 +109,7 @@ public class WarpsManager {
 	 * @throws WarpAlreadyExistsException 如果地标已存在
 	 */
 	public void addWarp(String name, Location loc) throws WarpAlreadyExistsException {
-		Path f = Paths.get(dir, name);
+		Path f = wpath.resolve(name);
 		if (Files.isDirectory(f))
 			try {
 				Files.delete(f);
@@ -150,7 +148,7 @@ public class WarpsManager {
 	 * @return 地标，如果不存在，返回 <b>null</b>
 	 */
 	public Location getByName(String name) {
-		Path f = Paths.get(dir, name);
+		Path f = wpath.resolve(name);
 		if (!Files.exists(f))
 			return null;
 
