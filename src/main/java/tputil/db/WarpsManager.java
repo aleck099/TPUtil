@@ -2,9 +2,9 @@ package tputil.db;
 
 import net.minecraft.util.math.Vec3d;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -158,21 +158,17 @@ public class WarpsManager {
 	}
 
 	private static Location readFile(Path f) {
-		char[] buf;
+		String buf;
 		try (
-				InputStreamReader iReader = new InputStreamReader(Files.newInputStream(f), Charset.forName("utf-8"))
+				BufferedReader iReader = Files.newBufferedReader(f, Charset.forName("utf-8"));
 		) {
-			char[] buf_ = new char[512];
-			int length = iReader.read(buf_);
-			buf = new char[length];
-			System.arraycopy(buf_, 0, buf, 0, length);
-			buf_ = null;
+			buf = iReader.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		String[] args = String.valueOf(buf).split(":", 4);
+		String[] args = buf.split(":", 4);
 		if (args.length != 4)
 			return null;
 		/* success */

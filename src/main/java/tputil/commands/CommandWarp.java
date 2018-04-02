@@ -60,7 +60,7 @@ public class CommandWarp extends CommandBase {
 
 			if (player.dimension != loc.dimension) {
 				try {
-					server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter());
+					server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter(player.getServerWorld()));
 				} catch (Throwable e) {
 					/*维度无效？或者是什么令人费解的东西？*/
 					player.sendMessage(new TextComponentTranslation("commands.warp.failure"));

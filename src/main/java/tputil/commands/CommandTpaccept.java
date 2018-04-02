@@ -67,7 +67,7 @@ public class CommandTpaccept extends CommandBase {
 			EntityPlayerMP dest = (EntityPlayerMP) sender;
 			/*跨纬度*/
 			if (source.dimension != dest.dimension)
-				server.getPlayerList().transferPlayerToDimension(source, dest.dimension, new EmptyTeleporter());
+				server.getPlayerList().transferPlayerToDimension(source, dest.dimension, new EmptyTeleporter(source.getServerWorld()));
 
 			source.setPositionAndUpdate(dest.posX, dest.posY, dest.posZ);
 			source.sendMessage(new TextComponentTranslation("commands.tpaccept.success.source"));

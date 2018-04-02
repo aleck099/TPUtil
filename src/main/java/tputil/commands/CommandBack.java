@@ -48,7 +48,7 @@ public class CommandBack extends CommandBase {
 
 			if (player.dimension != loc.dimension) {
 				/*跨维度*/
-				server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter());
+				server.getPlayerList().transferPlayerToDimension(player, loc.dimension, new EmptyTeleporter(player.getServerWorld()));
 			}
 
 			/*传送*/

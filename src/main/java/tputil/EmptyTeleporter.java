@@ -2,6 +2,7 @@ package tputil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
+import net.minecraft.world.WorldServer;
 
 /**
  * 这个类就是用来搞笑的
@@ -9,8 +10,8 @@ import net.minecraft.world.Teleporter;
  */
 public class EmptyTeleporter extends Teleporter {
 
-	public EmptyTeleporter() {
-		super(null);
+	public EmptyTeleporter(WorldServer worldIn) {
+		super(worldIn);
 	}
 
 	@Override
