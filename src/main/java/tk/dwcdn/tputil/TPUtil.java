@@ -1,18 +1,18 @@
-package tputil;
+package tk.dwcdn.tputil;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import tputil.commands.*;
+import tk.dwcdn.tputil.commands.*;
 
 @Mod(modid = TPUtil.MODID, version = TPUtil.VERSION)
 public class TPUtil {
 
-	public static final String MODID = "tputil", VERSION = "1.0.8";
+	public static final String MODID = "tputil", VERSION = "1.0.9";
 
-	@SidedProxy(serverSide = "tputil.CommonProxy", clientSide = "tputil.CommonProxy$ClientProxy", modId = MODID)
+	@SidedProxy(serverSide = "tk.dwcdn.tputil.CommonProxy", clientSide = "tk.dwcdn.tputil.CommonProxy$ClientProxy", modId = MODID)
 	public static CommonProxy proxy;
 
 	@Mod.EventHandler

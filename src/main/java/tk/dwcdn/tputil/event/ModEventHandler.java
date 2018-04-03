@@ -1,4 +1,4 @@
-package tputil.event;
+package tk.dwcdn.tputil.event;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
@@ -7,8 +7,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import tputil.Statics;
-import tputil.db.Location;
+import tk.dwcdn.tputil.Statics;
+import tk.dwcdn.tputil.db.Location;
 
 public class ModEventHandler {
 

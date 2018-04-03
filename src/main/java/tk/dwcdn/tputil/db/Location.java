@@ -1,4 +1,4 @@
-package tputil.db;
+package tk.dwcdn.tputil.db;
 
 import net.minecraft.util.math.Vec3d;
 

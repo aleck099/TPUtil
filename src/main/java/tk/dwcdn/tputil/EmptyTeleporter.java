@@ -1,4 +1,4 @@
-package tputil;
+package tk.dwcdn.tputil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;

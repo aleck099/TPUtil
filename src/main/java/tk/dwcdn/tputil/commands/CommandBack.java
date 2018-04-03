@@ -1,4 +1,4 @@
-package tputil.commands;
+package tk.dwcdn.tputil.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -6,9 +6,9 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
-import tputil.EmptyTeleporter;
-import tputil.Statics;
-import tputil.db.Location;
+import tk.dwcdn.tputil.EmptyTeleporter;
+import tk.dwcdn.tputil.Statics;
+import tk.dwcdn.tputil.db.Location;
 
 public class CommandBack extends CommandBase {
 	@Override

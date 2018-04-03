@@ -1,8 +1,8 @@
-package tputil;
+package tk.dwcdn.tputil;
 
-import tputil.db.Location;
-import tputil.db.TpManager;
-import tputil.db.WarpsManager;
+import tk.dwcdn.tputil.db.Location;
+import tk.dwcdn.tputil.db.TpManager;
+import tk.dwcdn.tputil.db.WarpsManager;
 
 import java.util.Map;
 

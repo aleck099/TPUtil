@@ -1,11 +1,11 @@
-package tputil.commands;
+package tk.dwcdn.tputil.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
-import tputil.Statics;
+import tk.dwcdn.tputil.Statics;
 
 public class CommandDelwarps extends CommandBase {
 	@Override

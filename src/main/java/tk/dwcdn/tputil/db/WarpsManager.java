@@ -1,4 +1,4 @@
-package tputil.db;
+package tk.dwcdn.tputil.db;
 
 import net.minecraft.util.math.Vec3d;
 
@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

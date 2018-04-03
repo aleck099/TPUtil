@@ -1,11 +1,11 @@
-package tputil;
+package tk.dwcdn.tputil;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
-import tputil.db.TpManager;
-import tputil.db.WarpsManager;
-import tputil.event.ModEventHandler;
+import tk.dwcdn.tputil.db.TpManager;
+import tk.dwcdn.tputil.db.WarpsManager;
+import tk.dwcdn.tputil.event.ModEventHandler;
 
 import java.io.IOException;
 import java.nio.file.Paths;

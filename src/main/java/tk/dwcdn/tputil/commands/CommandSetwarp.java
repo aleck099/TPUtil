@@ -1,4 +1,4 @@
-package tputil.commands;
+package tk.dwcdn.tputil.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -8,9 +8,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
-import tputil.Statics;
-import tputil.db.Location;
-import tputil.db.WarpsManager;
+import tk.dwcdn.tputil.Statics;
+import tk.dwcdn.tputil.db.Location;
+import tk.dwcdn.tputil.db.WarpsManager;
 
 public class CommandSetwarp extends CommandBase {
 	@Override

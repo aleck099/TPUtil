@@ -1,4 +1,4 @@
-package tputil.db;
+package tk.dwcdn.tputil.db;
 
 public class TpRequest {
 	public TpRequest(String source, String dest, long tick) {
