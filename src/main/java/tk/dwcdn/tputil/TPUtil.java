@@ -10,7 +10,7 @@ import tk.dwcdn.tputil.commands.*;
 @Mod(modid = TPUtil.MODID, version = TPUtil.VERSION)
 public class TPUtil {
 
-	public static final String MODID = "tputil", VERSION = "1.0.9";
+	public static final String MODID = "tputil", VERSION = "1.0.10";
 
 	@SidedProxy(serverSide = "tk.dwcdn.tputil.CommonProxy", clientSide = "tk.dwcdn.tputil.CommonProxy$ClientProxy", modId = MODID)
 	public static CommonProxy proxy;

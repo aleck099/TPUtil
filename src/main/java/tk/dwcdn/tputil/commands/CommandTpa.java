@@ -74,7 +74,7 @@ public class CommandTpa extends CommandBase {
 
 			Statics.tpManager.request(new TpRequest(sender.getName(), argName, System.currentTimeMillis()));
 			sender.sendMessage(new TextComponentTranslation("commands.tpa.success"));
-			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request0", argName));
+			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request0", sender.getName()));
 			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request1"));
 			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request2"));
 			playerDest.sendMessage(new TextComponentTranslation("commands.tpa.request3", 120));
