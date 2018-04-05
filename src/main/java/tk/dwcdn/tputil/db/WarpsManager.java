@@ -2,15 +2,14 @@ package tk.dwcdn.tputil.db;
 
 import net.minecraft.util.math.Vec3d;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -40,12 +39,12 @@ public class WarpsManager {
 	}
 
 	public void removeAll() {
-		for (Path f : wpath) {
-			try {
+		try {
+			for (Path f : wpath) {
 				Files.delete(f);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -156,10 +155,11 @@ public class WarpsManager {
 
 	private static Location readFile(Path f) {
 		String buf;
-		try (
-				BufferedReader iReader = Files.newBufferedReader(f, Charset.forName("utf-8"));
-		) {
-			buf = iReader.readLine();
+		try {
+			List<String> ls = Files.readAllLines(f, Charset.forName("utf-8"));
+			if (ls.size() < 1)
+				return null;
+			buf = ls.get(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -176,7 +176,7 @@ public class WarpsManager {
 	}
 
 	public List<String> getMatches(String prefix) {
-		LinkedList<String> ls = new LinkedList<>();
+		List<String> ls = new ArrayList<>();
 		Stream<Path> fl;
 		try {
 			fl = Files.list(wpath);
@@ -184,15 +184,13 @@ public class WarpsManager {
 			e.printStackTrace();
 			return Collections.emptyList();
 		}
-		if (fl == null)
-			return Collections.emptyList();
 
 		fl.filter(p -> p.getFileName().toString().startsWith(prefix)).forEach(p -> ls.add(p.getFileName().toString()));
 		return ls;
 	}
 
 	public List<String> getAll() {
-		List<String> ls = new LinkedList<>();
+		List<String> ls = new ArrayList<>();
 		try {
 			Files.list(wpath).forEach(p -> ls.add(p.getFileName().toString()));
 		} catch (IOException e) {

@@ -13,7 +13,6 @@ import tk.dwcdn.tputil.db.TpRequest;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CommandTpa extends CommandBase {
@@ -24,15 +23,7 @@ public class CommandTpa extends CommandBase {
 
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-		if (args.length != 1)
-			return Collections.emptyList();
-		LinkedList<String> ls = new LinkedList<>();
-		for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
-			String name = player.getName();
-			if (name.startsWith(args[0]))
-				ls.add(name);
-		}
-		return ls;
+		return (args.length == 1) ? getListOfStringsMatchingLastWord(server.getOnlinePlayerNames()) : Collections.emptyList();
 	}
 
 	@Override
