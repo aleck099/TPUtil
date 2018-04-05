@@ -23,7 +23,7 @@ public class CommandTpa extends CommandBase {
 
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-		return (args.length == 1) ? getListOfStringsMatchingLastWord(server.getOnlinePlayerNames()) : Collections.emptyList();
+		return (args.length == 1) ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : Collections.emptyList();
 	}
 
 	@Override
