@@ -49,7 +49,7 @@ public class CommandResetwarp extends CommandBase {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (sender instanceof EntityPlayerMP) {
 			if (args.length != 1)
-				throw new WrongUsageException("commands.warp.usage");
+				throw new WrongUsageException("commands.resetwarp.usage");
 
 			String wname = args[0];
 			EntityPlayerMP player = (EntityPlayerMP) sender;

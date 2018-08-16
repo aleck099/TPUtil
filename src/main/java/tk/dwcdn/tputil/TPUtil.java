@@ -37,6 +37,7 @@ public class TPUtil {
 		event.registerServerCommand(new CommandWarp());
 		event.registerServerCommand(new CommandWarps());
 		event.registerServerCommand(new CommandResetwarp());
+		event.registerServerCommand(new CommandRenamewarp());
 	}
 
 }

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -68,6 +69,27 @@ public class WarpsManager {
 			oWriter.write(String.valueOf(loc.position.z));
 		} catch (FileNotFoundException e) {
 			throw new WarpNotFoundException();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 重命名地标
+	 * @param rawName 原名
+	 * @param newName 新地标名
+	 * @throws WarpNotFoundException 如果原地标不存在
+	 * @throws WarpAlreadyExistsException 如果新地标已存在
+	 */
+	public void renameWarp(String rawName, String newName) throws WarpNotFoundException, WarpAlreadyExistsException {
+		Path de = wpath.resolve(rawName);
+		if (Files.exists(de))
+			throw new WarpNotFoundException();
+
+		try {
+			Files.move(de, wpath.resolve(newName));
+		} catch (FileAlreadyExistsException e) {
+			throw new WarpAlreadyExistsException();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -175,7 +197,7 @@ public class WarpsManager {
 				Double.valueOf(args[3])));
 	}
 
-	public List<String> getMatches(String prefix) {
+	public List<String> getMatches(final String prefix) {
 		List<String> ls = new ArrayList<>();
 		Stream<Path> fl;
 		try {

@@ -44,6 +44,10 @@ commands.warps.head=§aCurrent page: %s  Total: %s
 commands.resetwarp.usage=/resetwarp <warp>
 commands.resetwarp.success=§aWarp is reset
 
+commands.renamewarp.usage=/renamewarp <warp> <newName>
+commands.renamewarp.success=§aSuccessfully renamed warp
+commands.renamewarp.warpexists=§cThe target warp "§e%s§c" already exists!
+
 info.warpnotfound=§cWarp "§e%s§c" not found
 info.playeronly=§cOnly players can execute this command
 info.ridingcannottp=§cYou cannot use this command now because you are riding on something

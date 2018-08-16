@@ -36,9 +36,9 @@ public class CommandWarps extends CommandBase {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) {
 			List<String> alist = Statics.warpsManager.getAll();
-			StringBuffer sbuf = new StringBuffer(new TextComponentTranslation("commands.warps.list").getUnformattedText());
+			StringBuilder sbuf = new StringBuilder(new TextComponentTranslation("commands.warps.list").getUnformattedText());
 			for (String s : alist) {
-				sbuf.append("\n-§a " + s);
+				sbuf.append("\n-§a ").append(s);
 			}
 			sender.sendMessage(new TextComponentString(sbuf.toString()));
 		} else {
@@ -62,9 +62,9 @@ public class CommandWarps extends CommandBase {
 			// else
 			int rgstart = page * 8;
 			int rgend = rgstart + 8;
-			StringBuffer out = new StringBuffer(new TextComponentTranslation("commands.warps.head", String.valueOf(page) + 1, String.valueOf(pages)).getUnformattedText());
-			for (int lo = rgstart; lo < warps && lo < rgend; lo++) {
-				out.append("\n- §a" + sm.get(lo));
+			StringBuilder out = new StringBuilder(new TextComponentTranslation("commands.warps.head", String.valueOf(page + 1), String.valueOf(pages)).getUnformattedText());
+			for (int lo = rgstart; lo < warps && lo < rgend; ++lo) {
+				out.append("\n- §a").append(sm.get(lo));
 			}
 			sender.sendMessage(new TextComponentString(out.toString()));
 		}
