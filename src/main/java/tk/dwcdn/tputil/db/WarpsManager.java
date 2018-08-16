@@ -83,7 +83,7 @@ public class WarpsManager {
 	 */
 	public void renameWarp(String rawName, String newName) throws WarpNotFoundException, WarpAlreadyExistsException {
 		Path de = wpath.resolve(rawName);
-		if (Files.exists(de))
+		if (!Files.exists(de))
 			throw new WarpNotFoundException();
 
 		try {
